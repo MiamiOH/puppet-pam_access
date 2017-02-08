@@ -40,8 +40,9 @@
 #       origin     => "ALL EXCEPT LOCAL";
 #     "lusers-revoke-access":
 #       ensure => absent,
-#       user   => "lusers",
-#       group  => true;
+#       group  => "lusers";
+#     "admin-netgroup-access":
+#       netgroup => "admin";
 #   }
 #
 define pam_access::entry (
@@ -49,6 +50,7 @@ define pam_access::entry (
   $permission = '+',
   $user       = false,
   $group      = false,
+  $netgroup      = false,
   $origin     = 'LOCAL',
   $position   = undef,
 ) {
@@ -60,6 +62,12 @@ define pam_access::entry (
   validate_re($permission, ['\A[+-]\Z'], "\$pam_access::entry::permission must be '+' or '-'; '${permission}' received")
   if $user and $group {
     fail("\$pam_access::entry::user and \$pam_access::entry::group can not both be set")
+  }
+  if $user and $netgroup {
+    fail("\$pam_access::entry::user and \$pam_access::entry::netgroup can not both be set")
+  }
+  if $group and $netgroup {
+    fail("\$pam_access::entry::group and \$pam_access::entry::netgroup can not both be set")
   }
   if $position {
     $real_position = $position
@@ -95,6 +103,12 @@ define pam_access::entry (
       default => $group,
     }
     $context = 'group'
+  } elsif $netgroup {
+    $userstr = $netgroup ? {
+      true    => $title,
+      default => $netgroup,
+    }
+    $context = 'netgroup'
   } else {
     $userstr = $title
     $context = 'user'
