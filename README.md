@@ -28,6 +28,9 @@ Sample usage:
 
     pam_access::entry { 'lusers-revoke-access':
       create => false,
-      user   => 'lusers',
-      group  => true,
+      group   => 'lusers',
+    }
+
+    pam_access::entry { 'admin-netgroup-access':
+      netgroup => 'admin',
     }
