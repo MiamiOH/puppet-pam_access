@@ -17,6 +17,11 @@ class pam_access::pam {
       class { '::pam_access::pam::debian': } ->
       anchor { 'pam_access::pam::end': }
     }
+    'Suse': {
+      anchor { 'pam_access::pam::begin': } ->
+      class { '::pam_access::pam::suse': } ->
+      anchor { 'pam_access::pam::end': }
+    }
     default: {}
   }
 

@@ -14,6 +14,9 @@ class pam_access::params {
   ) {
     $enable_pamaccess_flags  = []
     $disable_pamaccess_flags = []
+  } elsif ($::osfamily == 'Suse') and (versioncmp($::operatingsystemrelease, '11.0') >= 0) {
+    $enable_pamaccess_flags  = []
+    $disable_pamaccess_flags = []
   } else {
     fail("The ${module_name} module is not supported on a ${::osfamily} based system with version ${::operatingsystemrelease}.")
   }
