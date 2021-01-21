@@ -1,0 +1,43 @@
+---
+
+mock_with: ':rspec'
+
+.gitlab-ci.yml:
+  delete: true
+appveyor.yml:
+  delete: true
+
+.travis.yml:
+  user: MiamiOH
+  secure: "RMGe+qbnUvk2tM7bXlLObXjlNB+C1cyHOU3FGJS0GdESVkdI6Wne66Y6tI5XPlWkI4UA0YWU/38fJllLuOdbKooNg5XOefocc5PQbmDbi8A7jRYMiZx7J9lblJKqb0HspmVsrWzz1Ss8l/UmkQWWAUAHU4yHTPquqFQV19CZytE="
+Gemfile:
+  required:
+    ':development':
+      - gem: travis
+    ':puppet_lint':
+      - gem: puppet-lint-absolute_classname-check
+      - gem: puppet-lint-absolute_template_path
+      - gem: puppet-lint-alias-check
+      - gem: puppet-lint-classes_and_types_beginning_with_digits-check
+      - gem: puppet-lint-duplicate_class_parameters-check
+      - gem: puppet-lint-empty_string-check
+      - gem: puppet-lint-extended
+      - gem: puppet-lint-file_ensure-check
+      - gem: puppet-lint-file_source_rights-check
+      - gem: puppet-lint-leading_zero-check
+      - gem: puppet-lint-numericvariable
+      - gem: puppet-lint-resource_reference_syntax
+      - gem: puppet-lint-security-plugins
+      - gem: puppet-lint-spaceship_operator_without_tag-check
+      - gem: puppet-lint-strict_indent-check
+      - gem: puppet-lint-trailing_comma-check
+      - gem: puppet-lint-trailing_newline-check
+      - gem: puppet-lint-undef_in_function-check
+      - gem: puppet-lint-unquoted_string-check
+      - gem: puppet-lint-variable_contains_upcase
+      - gem: puppet-lint-version_comparison-check
+
+Rakefile:
+  default_disabled_lint_checks:
+  - security_package_pinned_version
+  - 140chars

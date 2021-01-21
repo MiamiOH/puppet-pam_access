@@ -1,29 +1,28 @@
 require 'spec_helper'
 
-describe 'pam_access', :type => :class do
+describe 'pam_access', type => define do
   describe 'does stuff if os supported' do
-    let(:facts) { { :osfamily => 'RedHat', :operatingsystemrelease => '7.1' } }
-    let(:params) { { :manage_pam => false } }
+    let(:facts) { { osfamily => 'RedHat', operatingsystemrelease => '7.1' } }
+    let(:params) { { manage_pam => false } }
 
-    it { should compile.with_all_deps }
+    it { is_epected.to compile.with_all_deps }
 
     it do
-      should contain_file('/etc/security/access.conf').with(
-        :ensure => 'file',
-        :owner  => 'root',
-        :group  => 'root',
-        :mode   => '0644'
+      is_epected.to contain_file('/etc/security/access.conf').with(
+        its('owner') { is_epected.to eq 'root' },
+        its('group') { is_epected.to eq 'root' },
+        its('mode') { is_epected.to eq '0644' },
       )
     end
 
     describe 'execs authconfig-access' do
-      let(:params) { { :manage_pam => true } }
+      let(:params) { { manage_pam => true } }
 
-      it { should compile.with_all_deps }
+      it { is_epected.to compile.with_all_deps }
 
       it do
-        should contain_exec('authconfig-access').with(
-          :command => '/usr/sbin/authconfig --enablelocauthorize --enablepamaccess --update'
+        is_epected.to contain_exec('authconfig-access').with(
+          command => '/usr/sbin/authconfig --enablelocauthorize --enablepamaccess --update',
         )
       end
     end

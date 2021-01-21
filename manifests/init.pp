@@ -38,11 +38,11 @@ class pam_access (
   }
 
   if $manage_pam {
-    anchor { 'pam_access::begin': } ->
-    class { '::pam_access::pam':
+    anchor { 'pam_access::begin': }
+    -> class { 'pam_access::pam':
       require => File['/etc/security/access.conf'],
-    } ->
-    anchor { 'pam_access::end': }
+    }
+    -> anchor { 'pam_access::end': }
   }
 
   create_resources('pam_access::entry', $entries)

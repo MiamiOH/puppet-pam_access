@@ -8,14 +8,10 @@ class pam_access::pam {
 
   case $::osfamily {
     'RedHat': {
-      anchor { 'pam_access::pam::begin': } ->
-      class { '::pam_access::pam::redhat': } ->
-      anchor { 'pam_access::pam::end': }
+      anchor { 'pam_access::pam::begin': } -> class { 'pam_access::pam::redhat': } -> anchor { 'pam_access::pam::end': }
     }
     'Debian': {
-      anchor { 'pam_access::pam::begin': } ->
-      class { '::pam_access::pam::debian': } ->
-      anchor { 'pam_access::pam::end': }
+      anchor { 'pam_access::pam::begin': } -> class { 'pam_access::pam::debian': } -> anchor { 'pam_access::pam::end': }
     }
     default: {}
   }

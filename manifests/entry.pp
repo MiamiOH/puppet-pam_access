@@ -53,7 +53,7 @@ define pam_access::entry (
   $position   = undef,
 ) {
 
-  include ::pam_access
+  include pam_access
 
   # validate params
   validate_re($ensure, ['\Aabsent|present\Z'])
