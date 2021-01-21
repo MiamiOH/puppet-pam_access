@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'pam_access', type => class do
+describe 'pam_access' do
   describe 'does stuff if os supported' do
     let(:facts) { { osfamily => 'RedHat', operatingsystemrelease => '7.1' } }
     let(:params) { { manage_pam => false } }
