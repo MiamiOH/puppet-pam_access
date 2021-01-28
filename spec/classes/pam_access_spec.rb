@@ -22,7 +22,7 @@ describe 'pam_access' do
 
       it do
         is_expected.to contain_exec('authconfig-access').with(
-          'command' => '/usr/sbin/authconfig --enablelocauthorize --enablepamaccess --update',
+          command: '/usr/sbin/authconfig --enablelocauthorize --enablepamaccess --update',
         )
       end
     end
