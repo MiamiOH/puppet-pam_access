@@ -49,6 +49,7 @@ define pam_access::entry (
   $permission = '+',
   $user       = false,
   $group      = false,
+  $netgroup   = false,
   $origin     = 'LOCAL',
   $position   = undef,
 ) {
@@ -58,8 +59,8 @@ define pam_access::entry (
   # validate params
   validate_re($ensure, ['\Aabsent|present\Z'])
   validate_re($permission, ['\A[+-]\Z'], "\$pam_access::entry::permission must be '+' or '-'; '${permission}' received")
-  if $user and $group {
-    fail("\$pam_access::entry::user and \$pam_access::entry::group can not both be set")
+  if ($user and $group) or ($user and $netgroup) or ($group and $netgroup) {
+    fail("Only one of \$pam_access::entry::user, \$pam_access::entry::group or \$pam_access::entry::netgroup can be set")
   }
   if $position {
     $real_position = $position
@@ -95,6 +96,12 @@ define pam_access::entry (
       default => $group,
     }
     $context = 'group'
+  } elsif $netgroup {
+    $userstr = $netgroup ? {
+      true    => $title,
+      default => $netgroup,
+    }
+    $context = 'netgroup'
   } else {
     $userstr = $title
     $context = 'user'
