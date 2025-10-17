@@ -45,12 +45,12 @@
 #   }
 #
 define pam_access::entry (
-  Enum['present', 'absent'] $ensure          = present,
-  Enum['+', '-'] $permission                 = '+',
-  Boolean $user                              = false,
-  Boolean $group                             = false,
-  String $origin                             = 'LOCAL',
-  Optional[Enum['after','before']] $position = undef,
+  Enum['present', 'absent'] $ensure                = present,
+  Enum['+', '-'] $permission                       = '+',
+  Variant[Boolean, String[1]] $user                = false,
+  Variant[Boolean, String[1]] $group               = false,
+  String $origin                                   = 'LOCAL',
+  Optional[Enum['after','before', '-1']] $position = undef,
 ) {
 
   include pam_access
@@ -99,6 +99,16 @@ define pam_access::entry (
 
   case $ensure {
     'present': {
+      # If /etc/security/access.conf has no access entries, add one. It will always be first, last and second to last.
+      augeas { "pam_access/${context}/${permission}:${userstr}:${origin}/${ensure} in empty file":
+        changes => [
+          "set access ${permission}",
+          "set access/${context} ${userstr}",
+          "set access/origin ${origin}",
+        ],
+        onlyif => 'match access size == 0'
+      }
+
       $create_cmds = $real_position ? {
         'after'  => [
           "set access[last()+1] ${permission}",
@@ -118,10 +128,11 @@ define pam_access::entry (
           "set access[last()-1]/origin ${origin}",
         ],
       }
-
+      # This second augeas command will not run if the first has already run due to its onlyif check.
       augeas { "pam_access/${context}/${permission}:${userstr}:${origin}/${ensure}":
         changes => $create_cmds,
         onlyif  => "match access[. = '${permission}'][${context} = '${userstr}'][origin = '${origin}'] size == 0",
+        require => Augeas["pam_access/${context}/${permission}:${userstr}:${origin}/${ensure} in empty file"],
       }
     }
     'absent': {

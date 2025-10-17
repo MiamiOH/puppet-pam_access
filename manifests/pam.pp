@@ -6,7 +6,7 @@
 # [Remember: No empty lines between comments and class definition]
 class pam_access::pam {
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'RedHat': {
       anchor { 'pam_access::pam::begin': } -> class { 'pam_access::pam::redhat': } -> anchor { 'pam_access::pam::end': }
     }

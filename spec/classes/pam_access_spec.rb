@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'pam_access' do
   describe 'does stuff if os supported' do
-    let(:facts) { { osfamily: 'RedHat', operatingsystemrelease: '7.1' } }
+    let(:facts) { { os: { family: 'RedHat', release: { full: '7.1'} },  } }
     let(:params) { { manage_pam: false } }
 
     it { is_expected.to compile.with_all_deps }
