@@ -50,9 +50,8 @@ define pam_access::entry (
   Boolean $user                              = false,
   Boolean $group                             = false,
   String $origin                             = 'LOCAL',
-  Optional[Enum['after','before']] $position = undef,
+  Optional[Enum['after', 'before']] $position = undef,
 ) {
-
   include pam_access
 
   # validate params
@@ -134,5 +133,4 @@ define pam_access::entry (
     }
     default: { fail("Invalid ensure: ${ensure}") }
   }
-
 }

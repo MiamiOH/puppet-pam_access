@@ -5,7 +5,6 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class pam_access::pam::debian {
-
   pam { 'Set pam_access in login':
     ensure   => $pam_access::ensure,
     service  => 'login',
@@ -23,5 +22,4 @@ class pam_access::pam::debian {
     module   => 'pam_access.so',
     position => 'after module pam_nologin.so',
   }
-
 }

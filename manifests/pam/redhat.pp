@@ -5,7 +5,6 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class pam_access::pam::redhat {
-
   $authconfig_flags = $pam_access::ensure ? {
     'present' => join($pam_access::enable_pamaccess_flags, ' '),
     'absent'  => join($pam_access::disable_pamaccess_flags, ' '),
@@ -18,5 +17,4 @@ class pam_access::pam::redhat {
     command => $authconfig_update_cmd,
     unless  => $authconfig_check_cmd,
   }
-
 }

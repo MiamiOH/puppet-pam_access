@@ -24,7 +24,6 @@ class pam_access (
   Array $disable_pamaccess_flags    = $pam_access::params::disable_pamaccess_flags,
   Hash $entries                     = {},
 ) inherits pam_access::params {
-
   file { '/etc/security/access.conf':
     ensure => file,
     owner  => 'root',
@@ -41,5 +40,4 @@ class pam_access (
   }
 
   create_resources('pam_access::entry', $entries)
-
 }
