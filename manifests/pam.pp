@@ -1,9 +1,6 @@
 # Class: pam_access::pam
 #
-# Private class - Not to be used directly
-# See README.md for usage information
-#
-# [Remember: No empty lines between comments and class definition]
+# Internal dispatcher for operating-system-specific PAM integration.
 class pam_access::pam {
   case $facts['os']['family'] {
     'RedHat': {
