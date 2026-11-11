@@ -1,11 +1,7 @@
 # Class: pam_access::pam::debian
 #
-# Private class - Not to be used directly
-# See README.md for usage information
-#
-# [Remember: No empty lines between comments and class definition]
+# Internal PAM integration for Debian-family systems.
 class pam_access::pam::debian {
-
   pam { 'Set pam_access in login':
     ensure   => $pam_access::ensure,
     service  => 'login',
@@ -23,5 +19,4 @@ class pam_access::pam::debian {
     module   => 'pam_access.so',
     position => 'after module pam_nologin.so',
   }
-
 }

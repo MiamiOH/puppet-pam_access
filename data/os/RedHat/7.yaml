@@ -1,0 +1,9 @@
+---
+
+pam_access::enable_pamaccess_flags:
+  - '--enablelocauthorize'
+  - '--enablepamaccess'
+
+pam_access::disable_pamaccess_flags:
+  - '--enablelocauthorize'
+  - '--disablepamaccess'

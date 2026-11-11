@@ -1,8 +1,8 @@
 {
   "name": "MiamiOH-pam_access",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "author": "Harvard University Information Technology, Miami University Information Technology",
-  "summary": "Manage access.conf entries with Augeas",
+  "summary": "Manage PAM access rules across modern Linux distributions",
   "license": "MIT",
   "source": "https://github.com/MiamiOH/puppet-pam_access.git",
   "project_page": "https://github.com/MiamiOH/puppet-pam_access",
@@ -10,68 +10,99 @@
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 6.5.0 < 8.0.0"
+      "version_requirement": ">= 8.0.0 < 10.0.0"
     },
     {
       "name": "herculesteam/augeasproviders_pam",
-      "version_requirement": ">= 2.1.0 < 3.0.0"
+      "version_requirement": ">= 4.0.0 < 5.0.0"
+    },
+    {
+      "name": "puppetlabs/augeas_core",
+      "version_requirement": ">= 1.5.0 < 2.0.0"
     }
   ],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "6",
-        "7"
+        "7",
+        "8",
+        "9",
+        "10"
       ]
     },
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "6",
-        "7"
+        "7",
+        "8",
+        "9"
       ]
     },
     {
-      "operatingsystem": "Amazon",
+      "operatingsystem": "Rocky",
       "operatingsystemrelease": [
-        "2"
+        "8",
+        "9",
+        "10"
+      ]
+    },
+    {
+      "operatingsystem": "AlmaLinux",
+      "operatingsystemrelease": [
+        "8",
+        "9",
+        "10"
       ]
     },
     {
       "operatingsystem": "OracleLinux",
       "operatingsystemrelease": [
-        "6",
-        "7"
+        "7",
+        "8",
+        "9",
+        "10"
+      ]
+    },
+    {
+      "operatingsystem": "Amazon",
+      "operatingsystemrelease": [
+        "2",
+        "2023"
       ]
     },
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "7",
-        "8"
+        "10",
+        "11",
+        "12",
+        "13"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "12.04",
-        "14.04"
+        "18.04",
+        "20.04",
+        "22.04",
+        "24.04",
+        "26.04"
       ]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 6.0.0 < 8.0.0"
+      "version_requirement": ">= 7.0.0 < 9.0.0"
     }
   ],
   "tags": [
     "pam",
     "access"
   ],
-  "description": "The pam_access module allows access control based on username, groupname, network address, and process name.  This module allows Puppet to manage entries in the access.conf file.",
-  "pdk-version": "2.1.0",
-  "template-url": "pdk-default#2.1.0",
-  "template-ref": "tags/2.1.0-0-ga675ea5"
+  "description": "Manage PAM access rules in /etc/security/access.conf on modern RedHat-family and Debian-family Linux systems.",
+  "pdk-version": "3.4.0 (ge5fd1ee)",
+  "template-url": "https://github.com/puppetlabs/pdk-templates#3.4.0.1",
+  "template-ref": "tags/3.4.0.1-0-g7e53a02"
 }

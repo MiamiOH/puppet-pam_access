@@ -1,3 +1,15 @@
+# Changelog
+
+## 1.1.0
+
+- Add Puppet 7/8 and stdlib 8/9 compatibility metadata.
+- Add modern Linux OS support and authselect integration.
+- Correct pam_access::entry user/group parameter types.
+- Document all public parameters and enable documentation linting.
+- Declare the `augeas_core` module dependency required by the `augeas` resources.
+- Pin test fixtures to releases compatible with Puppet 7 and 8.
+- Clarify the supported Puppet and stdlib version ranges.
+
 2021-1-26 (1.0.3) Frank Luo
         * convert to pdk
         * fix spec tests to use augeas_core for puppet6
@@ -33,3 +45,9 @@
 
 0.0.1:
     Initial release.
+
+## 1.2.0
+
+- Exercise the existing anchor resources, PAM dispatcher classes, and Augeas
+  entries in unit tests so resource coverage reflects the complete catalog.
+- Move legacy authconfig flags into OS-specific Hiera data

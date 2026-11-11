@@ -1,29 +1,33 @@
 # Class: pam_access
 #
-# This module manages pam_access
-#    this module manages /etc/security/access.conf file
+# Manage entries in /etc/security/access.conf and optionally configure PAM
+# to load pam_access.so.
 #
-# Parameters:
-#
-#   $exec: true, false
-#
-#   If true, pam_access will take care of calling authconfig to apply its
-#   changes; if false, you must do this yourself elsewhere in your manifest.
-#
-# Actions:
-#
-# Requires:
-#
-# See pam_access::entry for more documentation.
-#
-# [Remember: No empty lines between comments and class definition]
+# @param ensure Whether the PAM access configuration is enabled or disabled.
+# @param manage_pam Whether this module manages PAM integration.
+# @param enable_pamaccess_flags Arguments passed to authconfig on legacy
+#   RedHat-family systems when enabling pam_access.
+# @param disable_pamaccess_flags Arguments passed to authconfig on legacy
+#   RedHat-family systems when disabling pam_access.
+# @param entries Hash of pam_access::entry resources keyed by resource title.
 class pam_access (
-  Enum['present', 'absent'] $ensure = present,
-  Boolean $manage_pam               = true,
-  Array $enable_pamaccess_flags     = $pam_access::params::enable_pamaccess_flags,
-  Array $disable_pamaccess_flags    = $pam_access::params::disable_pamaccess_flags,
-  Hash $entries                     = {},
-) inherits pam_access::params {
+  Enum['present', 'absent'] $ensure,
+  Boolean $manage_pam,
+  Array[String] $enable_pamaccess_flags,
+  Array[String] $disable_pamaccess_flags,
+  Hash $entries,
+) {
+  if $facts['os']['name'] == 'Amazon' {
+    if versioncmp($facts['os']['release']['major'], '2') < 0 {
+      fail("The ${module_name} module does not support Amazon Linux versions older than 2.")
+    }
+  } elsif $facts['os']['family'] == 'RedHat' {
+    if versioncmp($facts['os']['release']['major'], '6') < 0 {
+      fail("The ${module_name} module requires RedHat-family version 6 or newer.")
+    }
+  } elsif $facts['os']['family'] != 'Debian' {
+    fail("The ${module_name} module does not support ${facts['os']['name']} (${facts['os']['release']['full']}).")
+  }
 
   file { '/etc/security/access.conf':
     ensure => file,
@@ -41,5 +45,4 @@ class pam_access (
   }
 
   create_resources('pam_access::entry', $entries)
-
 }

@@ -1,12 +1,8 @@
 # Class: pam_access::pam
 #
-# Private class - Not to be used directly
-# See README.md for usage information
-#
-# [Remember: No empty lines between comments and class definition]
+# Internal dispatcher for operating-system-specific PAM integration.
 class pam_access::pam {
-
-  case $::osfamily {
+  case $facts['os']['family'] {
     'RedHat': {
       anchor { 'pam_access::pam::begin': } -> class { 'pam_access::pam::redhat': } -> anchor { 'pam_access::pam::end': }
     }
@@ -15,5 +11,4 @@ class pam_access::pam {
     }
     default: {}
   }
-
 }
